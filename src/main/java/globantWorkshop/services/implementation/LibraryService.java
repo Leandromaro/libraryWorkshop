@@ -2,6 +2,7 @@ package globantWorkshop.services.implementation;
 
 import globantWorkshop.models.entities.User;
 import globantWorkshop.models.dao.UserDao;
+import globantWorkshop.services.interfaces.LibraryServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -15,11 +16,20 @@ import java.util.List;
  */
 
 @Service
-public class LibraryService {
+public class LibraryService implements LibraryServiceInterface {
+
+    // ------------------------
+    // PRIVATE FIELDS
+    // ------------------------
 
     @Autowired
     UserDao userDao;
 
+    // ------------------------
+    // PUBLIC METHODS
+    // ------------------------
+
+    @Override
     public ArrayList<User> getAllUsers(){
         List<User> users = new ArrayList<User>();
         try {
@@ -30,10 +40,7 @@ public class LibraryService {
         return (ArrayList<User>) users;
     }
 
-    /**
-     * Create a new user with an auto-generated id and email and name as passed
-     * values.
-     */
+    @Override
     public String create(String email, String name) {
         try {
             User user = new User(email, name);
@@ -47,10 +54,7 @@ public class LibraryService {
         return "User succesfully created!";
     }
 
-    /**
-     * Delete the user with the passed id.
-     */
-
+    @Override
     public String delete(long id) {
         try {
             User user = new User(id);
@@ -64,10 +68,7 @@ public class LibraryService {
         return "User succesfully deleted!";
     }
 
-    /**
-     * Retrieve the id for the user with the passed email address.
-     */
-
+    @Override
     public ArrayList<User> getByEmail(String email) {
         String userId;
         ArrayList<User> users = new ArrayList<>();
@@ -83,9 +84,7 @@ public class LibraryService {
         return users;
     }
 
-    /**
-     * Update the email and the name for the user indentified by the passed id.
-     */
+    @Override
     public String updateName(long id, String email, String name) throws TransactionSystemException {
         try {
             User user = userDao.getById(id);
