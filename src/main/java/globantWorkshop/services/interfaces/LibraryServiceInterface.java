@@ -11,6 +11,10 @@ import java.util.List;
  */
 public interface LibraryServiceInterface {
 
+    /**
+     * Method created to get all the added users
+     * @return ArrayList<User>
+     */
     public ArrayList<User> getAllUsers();
 
     /**
