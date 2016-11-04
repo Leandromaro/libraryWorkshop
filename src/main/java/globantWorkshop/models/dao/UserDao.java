@@ -63,7 +63,7 @@ public class UserDao {
   }
 
 
-  public User getById(long id) {
+  public User getById(int id) {
     return entityManager.find(User.class, id);
   }
 

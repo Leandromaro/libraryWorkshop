@@ -21,7 +21,7 @@ public interface UserServiceInterface {
      * Create a new user with an auto-generated id and email and name as passed
      * values.
      */
-    public String create(String email, String name);
+    public String create(String name, String lastname, String email, Integer dni,String address,String phone);
 
     /**
      * Delete the user with the passed id.

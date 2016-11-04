@@ -1,18 +1,13 @@
 package globantWorkshop.controllers;
 
 import globantWorkshop.models.entities.User;
-import globantWorkshop.models.dao.UserDao;
 
-import globantWorkshop.services.implementation.LibraryService;
+import globantWorkshop.services.implementation.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -22,26 +17,23 @@ import java.util.List;
 /**
  * Class UserController
  */
-@Controller
+@RestController
+@RequestMapping(value = "/user")
 public class UserController {
 
   // ------------------------
   // PRIVATE FIELDS
   // ------------------------
-  // Wire the UserDao used inside this controller.
 
   @Autowired
-  private UserDao userDao;
-
-  @Autowired
-  private LibraryService libraryService;
+  private UserService libraryService;
 
   // ------------------------
   // PUBLIC METHODS
   // ------------------------
 
   /**
-   * Get all the users
+   * Get all the books
    */
   @RequestMapping(value = "/getUsers")
   @ResponseBody
@@ -53,19 +45,43 @@ public class UserController {
    * Create a new user with an auto-generated id and email and name as passed
    * values.
    */
-  @RequestMapping(value = "/create")
+  @RequestMapping(value = "/create", method = { RequestMethod.POST  }, headers = {"Content-type=application/json"})
   @ResponseBody
-  public String create(@RequestParam(value = "email", required = true) String email,
-                       @RequestParam(value = "name", required = true) String name) {
-    return libraryService.create(email, name);
+  public String create(@RequestBody String name,
+                       @RequestBody String lastname,
+                       @RequestBody String email,
+                       @RequestBody int dni,
+                       @RequestBody String address,
+                       @RequestBody String phone) {
+
+
+   return libraryService.create(name, lastname, email, dni, address,phone);
   }
+
+//  @RequestMapping(method = RequestMethod.POST)
+//  ResponseEntity<?> add(@PathVariable String userId, @RequestBody Bookmark input) {
+//    this.validateUser(userId);
+//    return this.accountRepository
+//            .findByUsername(userId)
+//            .map(account -> {
+//              Bookmark result = bookmarkRepository.save(new Bookmark(account,
+//                      input.uri, input.description));
+//
+//              HttpHeaders httpHeaders = new HttpHeaders();
+//              httpHeaders.setLocation(ServletUriComponentsBuilder
+//                      .fromCurrentRequest().path("/{id}")
+//                      .buildAndExpand(result.getId()).toUri());
+//              return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+//            }).get();
+//
+//  }
 
   /**
    * Delete the user with the passed id.
    */
   @RequestMapping(value = "/delete")
   @ResponseBody
-  public String delete(@RequestParam(value = "id", required = true) long id) {
+  public String delete(@RequestParam(value = "id", required = true) int id) {
     return libraryService.delete(id);
   }
 
@@ -83,7 +99,9 @@ public class UserController {
    */
   @RequestMapping(value = "/update")
   @ResponseBody
-  public String updateName(@RequestParam(value = "id", required = true) long id,
+
+  //revisar values
+  public String updateName(@RequestParam(value = "id", required = true) int id,
                            @RequestParam(value = "email", required = true) String email,
                            @RequestParam(value = "name", required = true) String name) {
     return libraryService.updateName(id, email, name);
