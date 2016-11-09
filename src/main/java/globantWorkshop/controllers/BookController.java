@@ -26,7 +26,7 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @RequestMapping(value = "/getBooks")
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Book> getAllBooks(){
         return new ArrayList<>();
@@ -35,7 +35,7 @@ public class BookController {
     /**
      * Create a new book with an auto-generated id
      */
-    @RequestMapping(value = "/createBook", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Book> create(@RequestBody Book book) {
         //Should Be implemented
@@ -48,9 +48,9 @@ public class BookController {
      * ATTENTION: The better way to access a post request it's using a wrapper as @RequestBody parameter,
      * but, here we only want to pass the id value, so we handle the id using the JSONObject class.
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String delete (@RequestBody JSONObject jsonRequest) {
+    public String delete (@PathVariable Integer bookId) {
         //Should Be implemented
         return "Should Be implemented";
     }
@@ -58,9 +58,9 @@ public class BookController {
     /**
      * Update the book's data for the book passed as parameter.
      */
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public String updateName(@RequestBody Book bookParam){
+    public String updateName(@PathVariable Integer bookId, @RequestBody Book bookParam){
         return "Should Be implemented";
     }
     /**
