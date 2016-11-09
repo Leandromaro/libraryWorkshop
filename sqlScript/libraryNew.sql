@@ -95,7 +95,6 @@ CREATE TABLE `books` (
   `Author` varchar(100) DEFAULT NULL,
   `ISBN` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idbooks`),
-  UNIQUE KEY `ISBN_UNIQUE` (`ISBN`)
 ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 
 INSERT INTO books (`idbooks`, `Name`, `Author`, `ISBN`) VALUES (5, 'bashirianstoltenberg', 'Laurel Thiel', '636');
