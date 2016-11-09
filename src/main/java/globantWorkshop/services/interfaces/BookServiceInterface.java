@@ -1,9 +1,9 @@
 package globantWorkshop.services.interfaces;
 
 import globantWorkshop.models.entities.Book;
-import globantWorkshop.models.entities.User;
 import org.springframework.transaction.TransactionSystemException;
 
+import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +20,7 @@ public interface BookServiceInterface {
      * Create a new book with an auto-generated id and author, name
      * and number of copies passed values.
      */
-    public String create(String name, String author, int ISBN);
+    public Book create(Book book) throws PersistenceException;
 
     /**
      * Delete the book with the passed id.
@@ -31,7 +31,12 @@ public interface BookServiceInterface {
     /**
      * Update the book atributes
      */
-    public String updateName(String name, String author, int ISBN) throws TransactionSystemException;
+    public String updateBook(Book bookParam) throws TransactionSystemException;
+
+    /**
+     * Retrieve a book from the id passed as parameter.
+     */
+    public Book findBookById(int bookId) throws TransactionSystemException;
 
 }
 

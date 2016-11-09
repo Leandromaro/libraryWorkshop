@@ -3,16 +3,27 @@ package globantWorkshop.controllers;
 import globantWorkshop.models.entities.User;
 
 import globantWorkshop.services.implementation.UserService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Class UserController
@@ -33,7 +44,7 @@ public class UserController {
   // ------------------------
 
   /**
-   * Get all the books
+   * Get all the users
    */
   @RequestMapping(value = "/getUsers")
   @ResponseBody
@@ -44,71 +55,46 @@ public class UserController {
   /**
    * Create a new user with an auto-generated id and email and name as passed
    * values.
+   * ATTENTION: The better way to access a post request it's using a wrapper as @RequestBody parameter,
+   * take a look at http://stackoverflow.com/questions/5726583/spring-rest-multiple-requestbody-parameters-possible
    */
-  @RequestMapping(value = "/create", method = { RequestMethod.POST  }, headers = {"Content-type=application/json"})
+  @RequestMapping(value = "/createUser", method = RequestMethod.POST)
   @ResponseBody
-  public String create(@RequestBody String name,
-                       @RequestBody String lastname,
-                       @RequestBody String email,
-                       @RequestBody int dni,
-                       @RequestBody String address,
-                       @RequestBody String phone) {
-
-
-   return libraryService.create(name, lastname, email, dni, address,phone);
+  public ResponseEntity<User> create(@RequestBody User userParam) throws PersistenceException {
+    User user = libraryService.create(userParam);
+    return new ResponseEntity<User>(user,HttpStatus.CREATED);
   }
 
-//  @RequestMapping(method = RequestMethod.POST)
-//  ResponseEntity<?> add(@PathVariable String userId, @RequestBody Bookmark input) {
-//    this.validateUser(userId);
-//    return this.accountRepository
-//            .findByUsername(userId)
-//            .map(account -> {
-//              Bookmark result = bookmarkRepository.save(new Bookmark(account,
-//                      input.uri, input.description));
-//
-//              HttpHeaders httpHeaders = new HttpHeaders();
-//              httpHeaders.setLocation(ServletUriComponentsBuilder
-//                      .fromCurrentRequest().path("/{id}")
-//                      .buildAndExpand(result.getId()).toUri());
-//              return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
-//            }).get();
-//
-//  }
 
   /**
    * Delete the user with the passed id.
+   * ATTENTION: The better way to access a post request it's using a wrapper as @RequestBody parameter,
+   * but, here we only want to pass the id value, so we handle the id using the JSONObject class.
    */
-  @RequestMapping(value = "/delete")
+  @RequestMapping(value = "/delete", method = RequestMethod.POST)
   @ResponseBody
-  public String delete(@RequestParam(value = "id", required = true) int id) {
+  public String delete (@RequestBody JSONObject jsonRequest) {
+    int id = Integer.parseInt(jsonRequest.get("id").toString());
     return libraryService.delete(id);
   }
 
   /**
-   * Retrieve the id for the user with the passed email address.
+   * Update the user's data for the user ipassed as parameter.
    */
-  @RequestMapping(value = "/getByEmail")
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
   @ResponseBody
-  public ArrayList<User> getByEmail(@RequestParam(value = "email", required = true) String email) {
-    return libraryService.getByEmail(email);
+  public String updateName(@RequestBody User userParam) {
+    return libraryService.updateUserValues(userParam);
   }
 
   /**
-   * Update the email and the name for the user indentified by the passed id.
-   */
-  @RequestMapping(value = "/update")
-  @ResponseBody
-
-  //revisar values
-  public String updateName(@RequestParam(value = "id", required = true) int id,
-                           @RequestParam(value = "email", required = true) String email,
-                           @RequestParam(value = "name", required = true) String name) {
-    return libraryService.updateName(id, email, name);
-  }
-
-  @ExceptionHandler({MissingServletRequestParameterException.class,TransactionSystemException.class,IllegalArgumentException.class, NullPointerException.class})
+   * Method created to handle the controller's exceptions, so the malformed request are responded in the controller layer
+   * @param response HttpStatus.BAD_REQUEST
+   * @throws IOException
+     */
+  @ExceptionHandler({MissingServletRequestParameterException.class,TransactionSystemException.class,IllegalArgumentException.class, PersistenceException.class, NullPointerException.class})
   void handleBadRequests(HttpServletResponse response) throws IOException {
     response.sendError(HttpStatus.BAD_REQUEST.value());
   }
+
 }

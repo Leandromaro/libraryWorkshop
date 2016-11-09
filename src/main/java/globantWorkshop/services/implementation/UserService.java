@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
 
+import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,60 +42,44 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public String create(String name, String lastname, String email, Integer dni,String address,String phone) {
-        try {
-            User user = new User(name, lastname, email, dni, address, phone);
-            userDao.create(user);
-        }
-        catch (TransactionSystemException ex) {
-            throw ex;
-        }catch (Exception ex) {
-            return "Error creating the user: " + ex.toString();
-        }
-        return "User succesfully created!";
+    public User create(User user) throws PersistenceException {
+        userDao.create(user);
+        return user;
     }
 
     @Override
-    public String delete(int idusers) {
-        User user = new User();
-        try {
-            user = userDao.getById(idusers);
-            userDao.delete(user);
-        }catch (Exception ex) {
-            return "Error deleting the user: " + ex.toString();
-        }
-        return "User succesfully deleted!";
+    public String delete(int idUser) {
+        User user = userDao.getById(idUser);
+        userDao.delete(user);
+        return "User successfully deleted!";
     }
 
-    @Override
-    public ArrayList<User> getByEmail(String email) {
-        ArrayList<User> users = new ArrayList<>();
-        try {
-            users = (ArrayList<User>) userDao.getByEmail(email);
-        }
-        catch (TransactionSystemException ex) {
-            throw ex;
-        }catch (Exception ex) {
-            throw ex;
-        }
-        return users;
-    }
 
     @Override
-    public String updateName(int id, String email, String name) throws TransactionSystemException {
+    public String updateUserValues(User newUser) {
         try {
-            User user = userDao.getById(id);
-            user.setEmail(email);
-            user.setName(name);
-            userDao.update(user);
-        }
-        catch (TransactionSystemException ex) {
-            throw ex;
+            userDao.update(newUser);
+            return "User successfully updated!";
         }catch (Exception ex) {
             return "Error updating the user " + ex.toString();
         }
-
-        return "User succesfully updated!";
     }
+
+
+    @Override
+    public User findUserById(int userId) throws TransactionSystemException {
+        User user;
+        try {
+            user = userDao.getById(userId);
+        }
+        catch (TransactionSystemException ex) {
+            throw ex;
+        }catch (Exception ex) {
+            throw ex;
+        }
+        return user;
+    }
+
+
 
 }

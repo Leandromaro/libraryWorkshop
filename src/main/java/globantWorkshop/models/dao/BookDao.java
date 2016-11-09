@@ -1,6 +1,7 @@
 package globantWorkshop.models.dao;
 
 import globantWorkshop.models.entities.Book;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -21,31 +22,30 @@ private EntityManager entityManager;
 
 
     public void create(Book book) {
-        entityManager.persist(book);
+        //Should Be implemented
         return;
     }
 
     public void delete(Book book) {
-        if (entityManager.contains(book))
-            entityManager.remove(book);
-        else{
-            entityManager.remove(entityManager.merge(book));
+        //Should Be implemented
             return;
-        }
     }
 
-    public ArrayList<Book> getAllBooks(){
-        List bookList = entityManager.createNativeQuery("select * from Books").getResultList();
-        return (ArrayList<Book>) bookList;
+    @SuppressWarnings("unchecked")
+    public List<Book> getAllBooks(){
+        //Should Be implemented
+        List bookList = new ArrayList<>();
+        return bookList;
     }
 
-    public void update(Book book) {
-        entityManager.merge(book);
+    public void update(Book book) throws Exception{
+        //Should Be implemented
         return;
     }
 
     public Book getById(int id) {
-        return entityManager.find(Book.class, id);
+    //Should Be implemented
+        return new Book();
     }
 
 }

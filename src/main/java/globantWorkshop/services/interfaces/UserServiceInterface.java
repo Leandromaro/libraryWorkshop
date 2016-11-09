@@ -3,6 +3,7 @@ package globantWorkshop.services.interfaces;
 import globantWorkshop.models.entities.User;
 import org.springframework.transaction.TransactionSystemException;
 
+import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,22 +22,21 @@ public interface UserServiceInterface {
      * Create a new user with an auto-generated id and email and name as passed
      * values.
      */
-    public String create(String name, String lastname, String email, Integer dni,String address,String phone);
+    public User create(User user) throws PersistenceException;
 
     /**
      * Delete the user with the passed id.
      */
 
-    public String delete(int id);
-
-    /**
-     * Retrieve the id for the user with the passed email address.
-     */
-
-    public ArrayList<User> getByEmail(String email);
+    public String delete(int idUser);
 
     /**
      * Update the email and the name for the user indentified by the passed id.
      */
-    public String updateName(int id, String email, String name) throws TransactionSystemException;
+    public String updateUserValues(User userParam) throws TransactionSystemException;
+
+    /**
+     * Retrieve a user from the id passed as parameter.
+     */
+    public User findUserById(int userId) throws TransactionSystemException;
 }

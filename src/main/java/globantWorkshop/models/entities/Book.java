@@ -33,10 +33,6 @@ public class Book{
     private String author;
     private Integer isbn;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name="copies")
-    private List<Copies> copiesList;
-
     public Book() {
     }
 
@@ -76,13 +72,6 @@ public class Book{
         this.isbn = isbn;
     }
 
-    public List<Copies> getCopiesList() {
-        return copiesList;
-    }
-
-    public void setCopiesList(List<Copies> copiesList) {
-        this.copiesList = copiesList;
-    }
 
     @Override
     public int hashCode() {

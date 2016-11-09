@@ -2,13 +2,18 @@ package globantWorkshop.controllers;
 
 import globantWorkshop.models.entities.Book;
 import globantWorkshop.services.implementation.BookService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,18 +29,48 @@ public class BookController {
     @RequestMapping(value = "/getBooks")
     @ResponseBody
     public List<Book> getAllBooks(){
-        return bookService.getAllBooks();
+        return new ArrayList<>();
     }
 
     /**
      * Create a new book with an auto-generated id
      */
-    @RequestMapping(value = "/createBook")
+    @RequestMapping(value = "/createBook", method = RequestMethod.POST)
     @ResponseBody
-    public String create(@RequestParam(value = "name", required = true) String name,
-                         @RequestParam(value = "author", required = true) String author,
-                         @RequestParam(value= "ISBN", required = true) int ISBN) {
-        return bookService.create(name,author,ISBN);
+    public ResponseEntity<Book> create(@RequestBody Book book) {
+        //Should Be implemented
+        Book newBook = new Book();
+        return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+    }
+
+    /**
+     * Delete the user with the passed id.
+     * ATTENTION: The better way to access a post request it's using a wrapper as @RequestBody parameter,
+     * but, here we only want to pass the id value, so we handle the id using the JSONObject class.
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public String delete (@RequestBody JSONObject jsonRequest) {
+        //Should Be implemented
+        return "Should Be implemented";
+    }
+
+    /**
+     * Update the book's data for the book passed as parameter.
+     */
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateName(@RequestBody Book bookParam){
+        return "Should Be implemented";
+    }
+    /**
+     * Method created to handle the controller's exceptions, so the malformed request are responded in the controller layer
+     * @param response HttpStatus.BAD_REQUEST
+     * @throws IOException
+     */
+    @ExceptionHandler({MissingServletRequestParameterException.class,TransactionSystemException.class,IllegalArgumentException.class, NullPointerException.class})
+    void handleBadRequests(HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 
 }

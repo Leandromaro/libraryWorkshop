@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 
 import globantWorkshop.models.entities.User;
@@ -37,7 +38,7 @@ public class UserDao {
   // PUBLIC METHODS
   // ------------------------
 
-  public void create(User user) {
+  public void create(User user) throws PersistenceException {
     entityManager.persist(user);
     return;
   }
@@ -55,19 +56,13 @@ public class UserDao {
     return entityManager.createQuery("from User").getResultList();
   }
 
-  public List<User> getByEmail(String email) {
-    return entityManager.createQuery(
-            "from User where email = :email")
-            .setParameter("email", email)
-            .getResultList();
-  }
 
 
   public User getById(int id) {
     return entityManager.find(User.class, id);
   }
 
-  public void update(User user) {
+  public void update(User user) throws Exception{
     entityManager.merge(user);
     return;
   }

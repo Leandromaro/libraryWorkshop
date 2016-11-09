@@ -21,11 +21,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
+
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idusers;
+    private Integer idUser;
 
     private String name;
 
@@ -39,8 +40,6 @@ public class User implements Serializable {
 
     private String phone;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    private List<Rentals> rentalsList;
 
     public User() {
     }
@@ -54,16 +53,16 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public User(Integer idusers) {
-        this.idusers = idusers;
+    public User(Integer idUser) {
+        this.idUser = idUser;
     }
 
     public Integer getIdusers() {
-        return idusers;
+        return idUser;
     }
 
-    public void setIdusers(Integer idusers) {
-        this.idusers = idusers;
+    public void setIdusers(Integer idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -114,18 +113,10 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public List<Rentals> getRentalsList() {
-        return rentalsList;
-    }
-
-    public void setRentalsList(List<Rentals> rentalsList) {
-        this.rentalsList = rentalsList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idusers != null ? idusers.hashCode() : 0);
+        hash += (idUser != null ? idUser.hashCode() : 0);
         return hash;
     }
 
@@ -136,7 +127,7 @@ public class User implements Serializable {
             return false;
         }
         User other = (User) object;
-        if ((this.idusers == null && other.idusers != null) || (this.idusers != null && !this.idusers.equals(other.idusers))) {
+        if ((this.idUser == null && other.idUser != null) || (this.idUser != null && !this.idUser.equals(other.idUser))) {
             return false;
         }
         return true;
@@ -144,7 +135,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "globantWorkshop.models.entities.Users[ idusers=" + idusers + " ]";
+        return "globantWorkshop.models.entities.Users[ idusers=" + idUser + " ]";
     }
     
 }
