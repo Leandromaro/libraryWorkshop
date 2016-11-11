@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class Book{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idbooks", nullable = false, unique = true)
+    @Column(name = "idbooks", nullable = false)
     private Integer idbooks;
 
     private String name;

@@ -15,31 +15,9 @@ fork this project so everyone uses the same folder structure.
 
 4. [Technical Assistance](#technical-assistance)
 
-5. [Performance Measurement](#performance-measurement)
+5. [Materials](#materials)
 
-6. [Handling advanced Developers](#handling-advanced-developers)
-
-7. [Materials](#materials)
-
-8. [General Guidelines](#general-guidelines)
-
-9. [Learning Days](#learning-days)
-
-    * [Topic 0: Introduction to Object Oriented Programming Concepts (OOP)](#topic-0-introduction-to-object-oriented-programming-concepts-2-days)
-
-    * [Topic 1: Maven](#topic-1-maven-1-day)
-
-    * [Topic 2: Test Driven Development](#topic-2-test-driven-development-2-days)
-
-    * [Topic 3: Services](#topic-3-services-2-days)
-
-    * [Topic 4: SQL - MySql](#topic-4-sql---mysql-2-days)
-
-    * [Topic 5: NoSQL - MongoDB](#topic-5-nosql---mongodb-2-days)
-
-    * [Topic 6: Spring Core & REST](#topic-5-spring-core--rest-3-days)
-
-10. [Your First Project Starts Now!](#your-first-project-starts-now)
+6. [General Guidelines](#general-guidelines)
 
 ###Objective
 
