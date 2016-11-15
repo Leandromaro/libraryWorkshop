@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+
+import globantWorkshop.models.entities.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,30 +24,25 @@ private EntityManager entityManager;
 
 
     public void create(Book book) {
-        //Should Be implemented
-        return;
+        entityManager.persist(book);
     }
 
     public void delete(Book book) {
-        //Should Be implemented
-            return;
+        if(entityManager.contains(book)) entityManager.remove(book);
+        else entityManager.remove(entityManager.merge(book));
     }
 
     @SuppressWarnings("unchecked")
     public List<Book> getAllBooks(){
-        //Should Be implemented
-        List bookList = new ArrayList<>();
-        return bookList;
+        return entityManager.createQuery("from books").getResultList();
     }
 
     public void update(Book book) throws Exception{
-        //Should Be implemented
-        return;
+        entityManager.merge(book);
     }
 
-    public Book getById(int id) {
-    //Should Be implemented
-        return new Book();
+    public Book getById(Integer isbn) {
+        return entityManager.find(Book.class,isbn);
     }
 
 }

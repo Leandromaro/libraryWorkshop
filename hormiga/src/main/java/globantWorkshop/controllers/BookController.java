@@ -1,5 +1,6 @@
 package globantWorkshop.controllers;
 
+import globantWorkshop.models.dao.BookDao;
 import globantWorkshop.models.entities.Book;
 import globantWorkshop.services.implementation.BookService;
 import org.json.simple.JSONObject;
@@ -29,7 +30,7 @@ public class BookController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Book> getAllBooks(){
-        return new ArrayList<>();
+        return bookService.getAllBooks();
     }
 
     /**
@@ -38,9 +39,8 @@ public class BookController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Book> create(@RequestBody Book book) {
-        //Should Be implemented
-        Book newBook = new Book();
-        return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+
+       return new ResponseEntity<Book>(bookService.create(book), HttpStatus.CREATED);
     }
 
     /**
@@ -51,8 +51,7 @@ public class BookController {
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String delete (@PathVariable Integer bookId) {
-        //Should Be implemented
-        return "Should Be implemented";
+            return bookService.delete(bookId);
     }
 
     /**
@@ -61,7 +60,7 @@ public class BookController {
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseBody
     public String updateName(@PathVariable Integer bookId, @RequestBody Book bookParam){
-        return "Should Be implemented";
+        return bookService.updateBook(bookParam);
     }
     /**
      * Method created to handle the controller's exceptions, so the malformed request are responded in the controller layer

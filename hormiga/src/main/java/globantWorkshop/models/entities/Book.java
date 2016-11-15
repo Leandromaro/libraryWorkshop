@@ -30,6 +30,11 @@ public class Book{
 
     public Book() {
     }
+    public Book(String name, String author, Integer isbn){
+        this.name = name;
+        this.author = author;
+        this.isbn = isbn;
+    }
 
     public Book(Integer idbooks) {
         this.idbooks = idbooks;
@@ -64,6 +69,7 @@ public class Book{
     }
 
     public void setIsbn(Integer isbn) {
+
         this.isbn = isbn;
     }
 
@@ -91,6 +97,12 @@ public class Book{
     @Override
     public String toString() {
         return "globantWorkshop.models.entities.Books[ idbooks=" + idbooks + " ]";
+    }
+
+
+    public static boolean validateIsbn(Integer isbn){
+        if(isbn==null || isbn<100 || isbn > 999) return false;
+        return true;
     }
     
 }
