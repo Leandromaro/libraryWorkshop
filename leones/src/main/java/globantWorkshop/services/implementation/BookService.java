@@ -30,15 +30,19 @@ public class BookService implements BookServiceInterface {
 
     @Override
     public ArrayList<Book> getAllBooks() {
-        //Should Be implemented
         List<Book> books = new ArrayList<Book>();
+        try {
+            books = bookDao.getAllBooks();
+        } catch (Exception ex) {
+            throw ex;
+        }
         return (ArrayList<Book>) books;
     }
 
     @Override
     public Book create(Book book) throws PersistenceException {
-        //Should Be implemented
-        return new Book();
+        bookDao.create(book);
+        return book;
     }
 
     @Override
@@ -48,7 +52,14 @@ public class BookService implements BookServiceInterface {
 
     @Override
     public String updateBook(Book newBook){
-        return "Should Be implemented";
+
+        try {
+            bookDao.update(newBook);
+            return "Book successfully updated!";
+        }catch (Exception ex) {
+            return "Error updating the book " + ex.toString();
+        }
+
     }
 
     @Override
