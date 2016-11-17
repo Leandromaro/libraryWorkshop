@@ -29,16 +29,19 @@ public class BookService implements BookServiceInterface {
     // ------------------------
 
     @Override
-    public ArrayList<Book> getAllBooks() {
+    public List<Book> getAllBooks() {
         List<Book> books = bookDao.getAllBooks();
-        return (ArrayList<Book>) books;
+        return books;
     }
 
     @Override
     public Book create(Book book) throws PersistenceException {
-        if(bookDao.getById(book.getIsbn())!=null || !Book.validateIsbn(book.getIsbn())) return null;
-        bookDao.create(book);
-        return bookDao.getById(book.getIsbn());
+        if (findBookByIsbn(book.getIsbn()) && book.getIsbn()>=1000){
+            return null;
+        }else{
+            bookDao.create(book);
+            return bookDao.getById(book.getIdbooks());
+        }
     }
 
     @Override
@@ -70,6 +73,17 @@ public class BookService implements BookServiceInterface {
     @Override
     public Book findBookById(int bookId) throws TransactionSystemException {
         return bookDao.getById(bookId);
+    }
+
+    /*Otra Forma de Buscar el libro por isbn*/
+
+    @Override
+    public boolean findBookByIsbn(int isbn){
+        for (Book book:
+             bookDao.getAllBooks()) {
+            if (book.getIsbn().equals(isbn)) return true;
+        }
+        return false;
     }
 
 }

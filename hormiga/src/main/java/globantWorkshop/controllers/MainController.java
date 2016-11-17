@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
+/*@Controller*/
 public class MainController {
 
-  @RequestMapping("/")
+ /* @RequestMapping("/")
   @ResponseBody
   public String index() {
     return "Proudly handcrafted by " +
         "<a href='https://www.globant.com '>Globant</a> :)";
-  }
+  }*/
 
 }

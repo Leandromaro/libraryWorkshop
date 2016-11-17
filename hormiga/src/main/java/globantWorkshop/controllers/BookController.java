@@ -3,6 +3,7 @@ package globantWorkshop.controllers;
 import globantWorkshop.models.dao.BookDao;
 import globantWorkshop.models.entities.Book;
 import globantWorkshop.services.implementation.BookService;
+import globantWorkshop.services.implementation.BookService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,11 +37,12 @@ public class BookController {
     /**
      * Create a new book with an auto-generated id
      */
+    /*TODO ARREGLAR EL POST QUE NO ESTA SALIENDO*/
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Book> create(@RequestBody Book book) {
 
-       return new ResponseEntity<Book>(bookService.create(book), HttpStatus.CREATED);
+       return ResponseEntity.ok(bookService.create(book));
     }
 
     /**
@@ -48,20 +50,26 @@ public class BookController {
      * ATTENTION: The better way to access a post request it's using a wrapper as @RequestBody parameter,
      * but, here we only want to pass the id value, so we handle the id using the JSONObject class.
      */
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    /*TODO VER ELIMINAR EL BOOK*/
+    @RequestMapping(value = "/{idbooks}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String delete (@PathVariable Integer bookId) {
-            return bookService.delete(bookId);
+    public String delete (@PathVariable Integer idbooks) {
+            return bookService.delete(idbooks);
     }
 
     /**
      * Update the book's data for the book passed as parameter.
      */
+    /*TODO TAMBIEN FALTA VER EL UPDATE BOOK*/
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseBody
     public String updateName(@PathVariable Integer bookId, @RequestBody Book bookParam){
         return bookService.updateBook(bookParam);
     }
+    /*
+    *  Get book with id
+    */
+
     /**
      * Method created to handle the controller's exceptions, so the malformed request are responded in the controller layer
      * @param response HttpStatus.BAD_REQUEST

@@ -5,6 +5,7 @@ import org.springframework.transaction.TransactionSystemException;
 
 import javax.persistence.PersistenceException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by leandromaro on 29/10/16.
@@ -14,7 +15,7 @@ public interface BookServiceInterface {
      * Method created to get all the added books
      * @return ArrayList<User>
      */
-    public ArrayList<Book> getAllBooks();
+    public List<Book> getAllBooks();
 
     /**
      * Create a new book with an auto-generated id and author, name
@@ -37,6 +38,12 @@ public interface BookServiceInterface {
      * Retrieve a book from the id passed as parameter.
      */
     public Book findBookById(int bookId) throws TransactionSystemException;
+
+    /**
+     * created by Augusto
+     * Retrieve a book from the isbn passed as parameter.
+     */
+    public boolean findBookByIsbn(int bookIsbn) throws TransactionSystemException;
 
 }
 
