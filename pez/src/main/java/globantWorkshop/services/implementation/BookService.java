@@ -2,12 +2,15 @@ package globantWorkshop.services.implementation;
 
 import globantWorkshop.models.dao.BookDao;
 import globantWorkshop.models.entities.Book;
+import globantWorkshop.models.entities.User;
 import globantWorkshop.services.interfaces.BookServiceInterface;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
 import javax.persistence.PersistenceException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,31 +33,49 @@ public class BookService implements BookServiceInterface {
 
     @Override
     public ArrayList<Book> getAllBooks() {
-        //Should Be implemented
         List<Book> books = new ArrayList<Book>();
+        try {
+            books = bookDao.getAllBooks();
+        } catch (Exception ex) {
+            throw ex;
+        }
         return (ArrayList<Book>) books;
     }
 
     @Override
     public Book create(Book book) throws PersistenceException {
-        //Should Be implemented
-        return new Book();
+        bookDao.create(book);
+        return book;
     }
 
     @Override
-    public String delete(int id) {
-        return "Should Be implemented\n";
+    public String delete(int idBook) {
+    	Book book = bookDao.getById(idBook);
+        bookDao.delete(book);
+        return "Book successfully deleted!";
     }
 
     @Override
     public String updateBook(Book newBook){
-        return "Should Be implemented";
+    	try {
+            bookDao.update(newBook);
+            return "Book successfully updated!";
+        }catch (Exception ex) {
+            return "Error updating the book " + ex.toString();
+        }
     }
 
     @Override
     public Book findBookById(int bookId) throws TransactionSystemException {
         Book book = new Book();
-        //Should Be implemented
+        try {
+            book = bookDao.getById(bookId);
+        }
+        catch (TransactionSystemException ex) {
+            throw ex;
+        }catch (Exception ex) {
+            throw ex;
+        }
         return book;
     }
 

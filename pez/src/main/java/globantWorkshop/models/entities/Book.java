@@ -31,6 +31,12 @@ public class Book{
     public Book() {
     }
 
+    public Book(String name, String author, Integer isbn) {
+		this.name = name;
+		this.author = author;
+		this.isbn = isbn;
+	}
+    
     public Book(Integer idbooks) {
         this.idbooks = idbooks;
     }
