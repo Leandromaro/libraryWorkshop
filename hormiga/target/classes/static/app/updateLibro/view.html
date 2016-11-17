@@ -22,17 +22,17 @@
     <div class="row card-panel">
         <h5>Modificar Libro: {{ul.libro.name}}</h5>
         <form ng-submit="ul.updateBook(book,ul.libro)">
-            <input type="hidden" ng-value="{{ul.libro.idbooks}}" ng-model="book.idbooks" required>
+            <input type="hidden" value="{{ul.libro.idbooks}}" ng-model="book.idbooks" required>
             <div class="input-field">
                 <input type="number" min="000" max="999" ng-maxlength="3" value="{{ul.libro.isbn}}" ng-model="book.isbn" required>
                 <label >ISBN</label>
             </div>
             <div class="input-field">
-                <input type="text" placeholder="{{ul.libro.name}}" ng-model="book.name" required>
+                <input type="text" placeholder="{{ul.libro.name}}" ng-model="book.name">
                 <label >Nombre del Libro</label>
             </div>
             <div class="input-field">
-                <input type="text" placeholder="{{ul.libro.author}}" ng-model="book.author" required>
+                <input type="text" placeholder="{{ul.libro.author}}" ng-model="book.author">
                 <label >Autor</label>
             </div>
             <button type="submit" class="waves-effect waves-light btn"><i class="material-icons right">save</i>Guardar Datos</button>

@@ -1,10 +1,10 @@
 package globantWorkshop.services.interfaces;
 
 import globantWorkshop.models.entities.Book;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.TransactionSystemException;
 
 import javax.persistence.PersistenceException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,12 +27,12 @@ public interface BookServiceInterface {
      * Delete the book with the passed id.
      */
 
-    public String delete(int id);
+    public HttpStatus delete(int id);
 
     /**
      * Update the book atributes
      */
-    public String updateBook(Book bookParam) throws TransactionSystemException;
+    public HttpStatus updateBook(Book bookParam) throws TransactionSystemException;
 
     /**
      * Retrieve a book from the id passed as parameter.

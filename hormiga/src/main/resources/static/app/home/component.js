@@ -25,6 +25,7 @@ var home = angular.module('home',['ngRoute'])
                            }).then(function(result) {
                                     self.result = result.data.message;
                                     console.log(result);
+                                    self.refresh();
                                 });
                            }
 

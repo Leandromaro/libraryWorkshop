@@ -4,11 +4,11 @@ import globantWorkshop.models.dao.BookDao;
 import globantWorkshop.models.entities.Book;
 import globantWorkshop.services.interfaces.BookServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
 import javax.persistence.PersistenceException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,23 +45,23 @@ public class BookService implements BookServiceInterface {
     }
 
     @Override
-    public String delete(int id) {
+    public HttpStatus delete(int id) {
         try{
             Book book = bookDao.getById(id);
             bookDao.delete(book);
         } catch (Exception ex){
-            return "Error deleting book: " + ex.toString();
+            return HttpStatus.NOT_ACCEPTABLE;
         }
-        return "Book deleted successfully";
+        return HttpStatus.OK;
     }
 
     @Override
-    public String updateBook(Book newBook){
+    public HttpStatus updateBook(Book newBook){
         try {
             bookDao.update(newBook);
-            return "Book updated successfully";
+            return HttpStatus.OK/*"Book updated successfully"*/;
         } catch (Exception ex){
-            return "Error updating book: " + ex.toString();
+            return HttpStatus.NOT_ACCEPTABLE/*"Error updating book: " + ex.toString()*/;
         }
     }
 

@@ -23,14 +23,20 @@ var updatelibro = angular.module('updatelibro',['ngRoute'])
                        if(typeof(book.isbn) === "undefined"){
                         book.isbn=lb.isbn;
                        }
+                       if(typeof(book.name) === "undefined"){
+                                               book.name=lb.name;
+                                              }
+                       if(typeof(book.author) === "undefined"){
+                                               book.author=lb.author;
+                                              }
                            $http.put('books', book).then(function(result) {
-                           console.log(book);
+                           console.log(result);
                                self.result = result.data.message;
                                console.log(result);
                                if(result.data==""){
-                                    alert("No se actualizo el libro\nPor favor verifique los campos y vuelva a intentarlo.")
+                                    alert("No se guardo el libro\nPor favor verifique los campos y vuelva a intentarlo.")
                                }else{
-                                    alert("Se ha actualizado el libro.")
+                                    alert("Se ha modificado libro.")
                                     $location.path("/");
                                }
                            });

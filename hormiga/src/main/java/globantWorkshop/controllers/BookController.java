@@ -1,21 +1,16 @@
 package globantWorkshop.controllers;
 
-import globantWorkshop.models.dao.BookDao;
 import globantWorkshop.models.entities.Book;
 import globantWorkshop.services.implementation.BookService;
-import globantWorkshop.services.implementation.BookService;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,8 +48,8 @@ public class BookController {
     /*TODO VER ELIMINAR EL BOOK*/
     @RequestMapping(value = "/{idbooks}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String delete (@PathVariable Integer idbooks) {
-            return bookService.delete(idbooks);
+    public ResponseEntity<HttpStatus> delete (@PathVariable Integer idbooks) {
+            return ResponseEntity.ok(bookService.delete(idbooks));
     }
 
     /**
@@ -63,8 +58,9 @@ public class BookController {
     /*TODO TAMBIEN FALTA VER EL UPDATE BOOK*/
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public String updateName(@RequestBody Book bookParam){
-        return bookService.updateBook(bookParam);
+    public ResponseEntity<HttpStatus> updateName(@RequestBody Book bookParam){
+
+        return ResponseEntity.ok(bookService.updateBook(bookParam));
     }
     /*
     *  Get book with id
