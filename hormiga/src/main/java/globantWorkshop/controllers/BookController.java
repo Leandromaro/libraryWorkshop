@@ -61,15 +61,19 @@ public class BookController {
      * Update the book's data for the book passed as parameter.
      */
     /*TODO TAMBIEN FALTA VER EL UPDATE BOOK*/
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public String updateName(@PathVariable Integer bookId, @RequestBody Book bookParam){
+    public String updateName(@RequestBody Book bookParam){
         return bookService.updateBook(bookParam);
     }
     /*
     *  Get book with id
     */
-
+    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
+    @ResponseBody
+    public Book getBook(@PathVariable Integer bookId){
+        return bookService.findBookById(bookId);
+    }
     /**
      * Method created to handle the controller's exceptions, so the malformed request are responded in the controller layer
      * @param response HttpStatus.BAD_REQUEST

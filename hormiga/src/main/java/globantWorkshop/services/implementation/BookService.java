@@ -36,7 +36,7 @@ public class BookService implements BookServiceInterface {
 
     @Override
     public Book create(Book book) throws PersistenceException {
-        if (findBookByIsbn(book.getIsbn()) && book.getIsbn()>=1000){
+        if (findBookByIsbn(book.getIsbn()) || book.getIsbn()>=1000){
             return null;
         }else{
             bookDao.create(book);
@@ -58,16 +58,11 @@ public class BookService implements BookServiceInterface {
     @Override
     public String updateBook(Book newBook){
         try {
-            Book book = bookDao.getById(newBook.getIsbn());
-            book.setName(newBook.getName());
-            book.setAuthor(newBook.getAuthor());
-            book.setIsbn(newBook.getIsbn());
-            bookDao.update(book);
+            bookDao.update(newBook);
+            return "Book updated successfully";
         } catch (Exception ex){
             return "Error updating book: " + ex.toString();
         }
-
-        return "Book updated successfully";
     }
 
     @Override

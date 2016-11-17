@@ -18,6 +18,7 @@ var home = angular.module('home',['ngRoute'])
                            }
                            self.refresh();
                            self.deleteBook=function(id){
+                                console.log(id);
                                 $http({
                                 method: 'DELETE',
                                 url: '/books/'+id

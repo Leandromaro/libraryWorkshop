@@ -1,0 +1,54 @@
+<nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/#/" class="brand-logo">Biblioteca UTN</a>
+        <ul class="right hide-on-med-and-down">
+            <li>
+                <a class='dropdown-button' href='#' data-activates='dropdown1' data-beloworigin="true">
+                    <img src="img/avatar.jpg" alt="" class="circle responsive" height="60">
+                    <div style="float: right;margin-left: 10px;text-align: right;">Hola María Perez! <i class="material-icons right">arrow_drop_down</i></div></a>
+            </li>
+        </ul>
+        <!-- Dropdown Structure -->
+        <ul id='dropdown1' class='dropdown-content'>
+            <li><a href="#!">Editar Perfil</a></li>
+            <li><a href="#!">Cerrar Sesión</a></li>
+        </ul>
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="#">Hola María Perez!</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+<div class="container">
+    <div class="row card-panel">
+        <h5>Modificar Libro: {{ul.libro.name}}</h5>
+        <form ng-submit="ul.updateBook(book,ul.libro)">
+            <input type="hidden" ng-value="{{ul.libro.idbooks}}" ng-model="book.idbooks" required>
+            <div class="input-field">
+                <input type="number" min="000" max="999" ng-maxlength="3" value="{{ul.libro.isbn}}" ng-model="book.isbn" required>
+                <label >ISBN</label>
+            </div>
+            <div class="input-field">
+                <input type="text" placeholder="{{ul.libro.name}}" ng-model="book.name" required>
+                <label >Nombre del Libro</label>
+            </div>
+            <div class="input-field">
+                <input type="text" placeholder="{{ul.libro.author}}" ng-model="book.author" required>
+                <label >Autor</label>
+            </div>
+            <button type="submit" class="waves-effect waves-light btn"><i class="material-icons right">save</i>Guardar Datos</button>
+            <a href="/#/" class="waves-effect waves-light btn"><i class="material-icons right">cancel</i>Cancelar</a>
+        </form>
+    </div>
+</div>
+</div>
+
+
+<footer class="page-footer orange">
+
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+        </div>
+    </div>
+</footer>
+</div>
