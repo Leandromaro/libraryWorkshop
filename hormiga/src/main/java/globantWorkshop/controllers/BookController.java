@@ -2,18 +2,15 @@ package globantWorkshop.controllers;
 
 import globantWorkshop.models.entities.Book;
 import globantWorkshop.services.implementation.BookService;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,18 +26,18 @@ public class BookController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Book> getAllBooks(){
-        return new ArrayList<>();
+        return bookService.getAllBooks();
     }
 
     /**
      * Create a new book with an auto-generated id
      */
+    /*TODO ARREGLAR EL POST QUE NO ESTA SALIENDO*/
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Book> create(@RequestBody Book book) {
-        //Should Be implemented
-        Book newBook = new Book();
-        return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+
+       return ResponseEntity.ok(bookService.create(book));
     }
 
     /**
@@ -48,20 +45,30 @@ public class BookController {
      * ATTENTION: The better way to access a post request it's using a wrapper as @RequestBody parameter,
      * but, here we only want to pass the id value, so we handle the id using the JSONObject class.
      */
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    /*TODO VER ELIMINAR EL BOOK*/
+    @RequestMapping(value = "/{idbooks}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String delete (@PathVariable Integer bookId) {
-        //Should Be implemented
-        return "Should Be implemented";
+    public ResponseEntity<HttpStatus> delete (@PathVariable Integer idbooks) {
+            return ResponseEntity.ok(bookService.delete(idbooks));
     }
 
     /**
      * Update the book's data for the book passed as parameter.
      */
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    /*TODO TAMBIEN FALTA VER EL UPDATE BOOK*/
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public String updateName(@PathVariable Integer bookId, @RequestBody Book bookParam){
-        return "Should Be implemented";
+    public ResponseEntity<HttpStatus> updateName(@RequestBody Book bookParam){
+
+        return ResponseEntity.ok(bookService.updateBook(bookParam));
+    }
+    /*
+    *  Get book with id
+    */
+    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
+    @ResponseBody
+    public Book getBook(@PathVariable Integer bookId){
+        return bookService.findBookById(bookId);
     }
     /**
      * Method created to handle the controller's exceptions, so the malformed request are responded in the controller layer

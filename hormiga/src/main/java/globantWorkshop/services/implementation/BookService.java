@@ -4,11 +4,11 @@ import globantWorkshop.models.dao.BookDao;
 import globantWorkshop.models.entities.Book;
 import globantWorkshop.services.interfaces.BookServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
 import javax.persistence.PersistenceException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,33 +29,56 @@ public class BookService implements BookServiceInterface {
     // ------------------------
 
     @Override
-    public ArrayList<Book> getAllBooks() {
-        //Should Be implemented
-        List<Book> books = new ArrayList<Book>();
-        return (ArrayList<Book>) books;
+    public List<Book> getAllBooks() {
+        List<Book> books = bookDao.getAllBooks();
+        return books;
     }
 
     @Override
     public Book create(Book book) throws PersistenceException {
-        //Should Be implemented
-        return new Book();
+        if (findBookByIsbn(book.getIsbn()) || book.getIsbn()>=1000){
+            return null;
+        }else{
+            bookDao.create(book);
+            return bookDao.getById(book.getIdbooks());
+        }
     }
 
     @Override
-    public String delete(int id) {
-        return "Should Be implemented\n";
+    public HttpStatus delete(int id) {
+        try{
+            Book book = bookDao.getById(id);
+            bookDao.delete(book);
+        } catch (Exception ex){
+            return HttpStatus.NOT_ACCEPTABLE;
+        }
+        return HttpStatus.OK;
     }
 
     @Override
-    public String updateBook(Book newBook){
-        return "Should Be implemented";
+    public HttpStatus updateBook(Book newBook){
+        try {
+            bookDao.update(newBook);
+            return HttpStatus.OK/*"Book updated successfully"*/;
+        } catch (Exception ex){
+            return HttpStatus.NOT_ACCEPTABLE/*"Error updating book: " + ex.toString()*/;
+        }
     }
 
     @Override
     public Book findBookById(int bookId) throws TransactionSystemException {
-        Book book = new Book();
-        //Should Be implemented
-        return book;
+        return bookDao.getById(bookId);
+    }
+
+    /*Otra Forma de Buscar el libro por isbn*/
+
+    @Override
+    public boolean findBookByIsbn(int isbn){
+        for (Book book:
+             bookDao.getAllBooks()) {
+            if (book.getIsbn().equals(isbn)) return true;
+        }
+        return false;
     }
 
 }

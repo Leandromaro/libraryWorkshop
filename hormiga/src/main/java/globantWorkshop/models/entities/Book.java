@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  *
@@ -18,17 +19,25 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "books")
-public class Book{
+public class Book implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idbooks", nullable = false)
     private Integer idbooks;
 
+    @Column(name="name")
     private String name;
+    @Column(name="author")
     private String author;
+    @Column(name="isbn")
     private Integer isbn;
 
     public Book() {
+    }
+    public Book(String name, String author, Integer isbn){
+        this.name = name;
+        this.author = author;
+        this.isbn = isbn;
     }
 
     public Book(Integer idbooks) {
@@ -64,6 +73,7 @@ public class Book{
     }
 
     public void setIsbn(Integer isbn) {
+
         this.isbn = isbn;
     }
 
@@ -91,6 +101,12 @@ public class Book{
     @Override
     public String toString() {
         return "globantWorkshop.models.entities.Books[ idbooks=" + idbooks + " ]";
+    }
+
+    /*Un ISBN DEBE TENER 13 digitos*/
+    public static boolean validateIsbn(Integer isbn){
+        if(isbn==null || isbn<100 || isbn > 999) return false;
+        return true;
     }
     
 }
