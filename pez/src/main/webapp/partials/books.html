@@ -1,0 +1,16 @@
+<a ui-sref="newBook" class="btn-primary btn-lg nodecoration">Add New Book</a>
+<table class="table booktable">
+    <tr>
+        <td><h3>All Books</h3></td>
+        <td></td>
+    </tr>
+    <tr ng-repeat="book in books">
+        <td>{{book.name}}</td>
+        <td>{{book.author}}</td>
+        <td>{{book.isbn}}</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="viewBook({id:book.idbooks})">View</a>
+            <a class="btn btn-danger"  ng-click="deleteBook(book)">Delete</a>
+        </td>
+    </tr>
+</table>

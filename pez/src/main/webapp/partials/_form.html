@@ -1,0 +1,36 @@
+<div class="form-group">
+    <label for="name" class="col-sm-2 control-label">Title</label>
+    <div class="col-sm-10">
+        <input type="text" ng-maxlength="100" ng-pattern="/^[a-zA-Z]*$/" ng-model="book.name" class="form-control" id="name" name="name" placeholder="Book Title Here" required/>
+        <span ng-show="$error.required">Title is required.</span>
+        <span ng-show="form_book.name.$error.pattern">Only letters allowed!</span>
+    </div>
+</div>
+<div class="form-group">
+    <label for="isbn" class="col-sm-2 control-label">Year</label>
+    <div class="col-sm-10">
+        <input type="number" max="9999" ng-model="book.isbn" class="form-control" id="isbn" name="isbn" placeholder="When the book was written?"/>
+        <span ng-show="form_book.isbn.$error.number">Only numbers allowed!</span>
+        <span ng-show="form_book.isbn.$error.max">Maximum four digits!</span>
+    </div>
+</div>
+<div class="form-group">
+    <label for="author" class="col-sm-2 control-label">Author</label>
+    <div class="col-sm-10">
+        <input type="text" ng-maxlength="100" ng-pattern="/^[a-zA-Z]*$/" ng-model="book.author" class="form-control" id="author" name="author" placeholder="Who is the author?" required/>
+        <span ng-show="form_book.author.$error.pattern">Only letters allowed!</span>
+    </div>
+</div>
+
+<!--div class="form-group">
+    <label for="plot" class="col-sm-2 control-label">Book Genre</label>
+    <div class="col-sm-10">
+        <input type="text" ng-model="book.genre" class="form-control" id="plot" placeholder="Book genre here"/>
+    </div>
+</div-->
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <input type="submit" class="btn btn-primary" value="Save"/>
+    </div>
+</div>
