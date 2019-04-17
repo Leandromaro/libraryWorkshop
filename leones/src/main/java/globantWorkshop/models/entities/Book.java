@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  *
@@ -18,10 +19,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "books")
-public class Book{
+public class Book implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idbooks", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(name = "idbooks", nullable = false)
     private Integer idbooks;
 
     private String name;
@@ -29,6 +30,12 @@ public class Book{
     private Integer isbn;
 
     public Book() {
+    }
+
+    public Book(String name, String author, Integer isbn) {
+        this.name = name;
+        this.author = author;
+        this.isbn = isbn;
     }
 
     public Book(Integer idbooks) {

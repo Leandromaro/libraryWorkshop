@@ -2,18 +2,16 @@ package globantWorkshop.controllers;
 
 import globantWorkshop.models.entities.Book;
 import globantWorkshop.services.implementation.BookService;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,12 +22,15 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    BookService bookService;
+    private BookService libraryService;
 
+    /**
+     * Get all the books
+     */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Book> getAllBooks(){
-        return new ArrayList<>();
+        return libraryService.getAllBooks();
     }
 
     /**
@@ -37,12 +38,10 @@ public class BookController {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Book> create(@RequestBody Book book) {
-        //Should Be implemented
-        Book newBook = new Book();
-        return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+    public ResponseEntity<Book> create(@RequestBody Book bookParam) throws PersistenceException {
+        Book book = libraryService.create(bookParam);
+        return new ResponseEntity<Book>(book, HttpStatus.CREATED);
     }
-
     /**
      * Delete the user with the passed id.
      * ATTENTION: The better way to access a post request it's using a wrapper as @RequestBody parameter,
@@ -61,7 +60,7 @@ public class BookController {
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     @ResponseBody
     public String updateName(@PathVariable Integer bookId, @RequestBody Book bookParam){
-        return "Should Be implemented";
+        return libraryService.updateBook(bookParam);
     }
     /**
      * Method created to handle the controller's exceptions, so the malformed request are responded in the controller layer
